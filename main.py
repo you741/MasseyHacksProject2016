@@ -117,11 +117,11 @@ while running:
     if luffycurattack != None:
         if time()-attacktimer1 > luffycurattack.cooldown:
             luffycurattack = None
-            
+    #actual jump movement
     if time() - jumptimer1 <= 0.25:
-        y -= 20
+        y -= 40
     elif time() - jumptimer1 <= 0.5:
-        y += 20
+        y += 40
     else:
         y = 500
     #P2 CONTROLS
