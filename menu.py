@@ -79,7 +79,7 @@ while running:
                 mixer.music.play()
     else:
         #CODE#
-        
+        pass
     display.flip()
 font.quit()
 quit()

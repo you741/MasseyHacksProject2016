@@ -56,7 +56,7 @@ zorro = Character(zorroanims,zorro1,None,0,0,zorro1.get_width(),zorro1.get_width
 punch = Move( 5, 10, 0.5, 0.6, 2, 0, 10, 280, 30)
 kick = Move( 10, 30, 0.5, 0.9, 3, 0, 120, 280, 30)
 swing = Move(7, 50, 0.5, 1, 4, 0, 20, 280, 50)
-slash = Move(8,40,0.7,0.8,2,0,20,230,70)
+slash = Move(8,60,0.7,0.8,2,0,20,230,70)
 
 #====P1 VAR====#
 player1 = luffy.get_instance()
@@ -207,7 +207,7 @@ while running:
     elif time() - jumptimer1 <= 0.5:
         screen.blit(transform.flip(player1.anims[0],o1_1,o1_2),(player1.x,player1.y)) 
     elif moving:
-        screen.blit(transform.flip(player1.anims[1][int(time()%(0.5/len(player1.anims[1])))],o1_1,o1_2),(player1.x,player1.y))
+        screen.blit(transform.flip(player1.anims[1][int(time()%0.5/(0.5/len(player1.anims[1])))],o1_1,o1_2),(player1.x,player1.y))
     else:
         screen.blit(transform.flip(player1.sprite,o1_1,o1_2),(player1.x,player1.y))
 
