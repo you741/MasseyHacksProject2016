@@ -49,14 +49,15 @@ screen.blit(back1,(0,0))
 #====Characters====#
 ##anims, sprite, curattack, x,y,width, height, maxenergy, maxhp, jumpspeed, 
 luffy = Character(luffyanims,luffy1,None,0,0,luffy1.get_width(),luffy1.get_height(),100,100,0)
-zorro = Character(zorroanims,zorro1,None,0,0,zorro1.get_width(),zorro1.get_width(),100,200,0)
+zorro = Character(zorroanims,zorro1,None,0,0,zorro1.get_width(),zorro1.get_width(),80,150,0)
 
 #====Moves====#
 #damage, energy, time, cooldown, animsindex, dx,dy, width, height
 punch = Move( 5, 10, 0.5, 0.6, 2, 0, 10, 280, 30)
 kick = Move( 10, 30, 0.5, 0.9, 3, 0, 120, 280, 30)
-swing = Move(7, 50, 0.5, 1, 4, 0, 20, 280, 50)
+swing = Move(15, 50, 0.5, 1, 4, 0, 20, 280, 50)
 slash = Move(8,60,0.7,0.8,2,0,20,230,70)
+
 
 #====P1 VAR====#
 player1 = luffy.get_instance()
@@ -169,13 +170,11 @@ while running:
         nx2 -= 10
         moving2 = True
         dir2 = 1
-    if kp[K_RETURN] and player2.curattack == None and player2.energy > slash.energy:
+    if kp[K_RETURN] and player2.curattack == None and player2.energy > punch.energy:
         #punch
         attacktimer2 = time()
-
-        player2.curattack = slash
-        player2.energy -= slash.energy
-
+        player2.curattack = punch
+        player2.energy -= punch.energy
     if player2.curattack != None:
         if time()-attacktimer2 > player2.curattack.cooldown:
             player2.curattack = None
@@ -223,7 +222,6 @@ while running:
             punchrect2 = player2.curattack.hitbox
 #            draw.rect(screen,BLACK,punchrect1.move(x+dir1*(width-punchrect1.width),y+10),1)
             if punchrect2.move(player2.x+dir2*(player2.width-punchrect2.width),player2.y+10).colliderect(player1.hitbox.move(player1.x,player1.y)) and time() - damagetimer1 > 0.6:
-                print("MEOW")
                 player1.hp -= player2.curattack.damage
                 damagetimer1 = time()
     elif time() - jumptimer2 <= 0.5:
@@ -253,7 +251,7 @@ while running:
     if player1.energy < player1.maxenergy:       
         player1.energy += 1
     if player2.energy < player2.maxenergy:
-        player2.energy += 1
+        player2.energy += 0.3
 
     
     display.flip()
