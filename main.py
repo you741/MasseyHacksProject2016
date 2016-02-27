@@ -18,7 +18,7 @@ GREEN = (0,255,0)
 back1 = image.load("images/background1.png")
 
 luffy1 = image.load('images/luffy1.png')
-zorro1 = transform.smoothscale(transform.flip(image.load("images/z.png"),True,False),(120,200))
+zorro1 = transform.flip(image.load("images/z.png"),True,False)
 
 luffyanims = [image.load("images/jump.png"),
               [image.load("images/ru1.png"),
