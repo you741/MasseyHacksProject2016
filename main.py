@@ -3,6 +3,7 @@ from pygame import *
 from time import *
 os.environ['SDL_VIDEO_WINDOW_POS'] = '70,25'
 screen = display.set_mode((1200,730))
+display.set_caption("Fight Fighters: The Fightening")
 #====COLOR====#
 BLACK  = (0,0,0)
 #====IMAGES====#
@@ -19,14 +20,11 @@ jumptimer1 = 0
 x2,y2 = 3000,500
 width,height = 100,100
 jumptimer2 = 0
-#====ENEMIES====#
-
 #====GAME PLAY FUNCTION====#
 font.init() #Starts font
 tymeFont = font.SysFont("Arial", 30)
 hpbar1 = Rect(50,50,450,50)
 hpbar2 = Rect(700,50,450,50)
-tyme = 100
 running = True
 while running:
     for e in event.get():
@@ -79,14 +77,7 @@ while running:
     draw.rect(screen,(0,255,0),hpbar1)
     draw.rect(screen,(0,255,0),hpbar2)
     screen.blit(luffy1,(600-width//2,y))
-
-    tyme -= 1
-    tyme = str(tyme)
-    tymePic = tymeFont.render((tyme), True, (0,0,0))
-    screen.blit(tymePic,(650,50))
-    tyme = int(tyme)
     
     display.flip()
 font.quit() #deletes font
-del tymeFont
 quit()
