@@ -21,7 +21,7 @@ screen.blit(back1,(0,0))
 
 #====Moves====#
 punch = Move( 5, 0, 0.5, 0.6)
-kick = Move( 10, 0, 0.7, 0.9)
+kick = Move( 10, 0, 0.5, 2)
 
 
 #====P1 VAR====#
@@ -83,15 +83,21 @@ while running:
     if kp[K_w] and time() - jumptimer1 > 0.6:
         #jump
         jumptimer1 = time()
-    #MOVES OF P1
+    #MOVES OF P1 setting to attack
     if kp[K_e] and luffycurattack == None:
         #punch
         attacktimer1 = time()
         luffycurattack = punch
+    if kp[K_q] and luffycurattack == None:
+        #kick
+        attacktimer1 = time()
+        luffycurattack = kick
 
     if luffycurattack != None:
         if time()-attacktimer1 > luffycurattack.cooldown:
             luffycurattack = None
+
+            
     if time() - jumptimer1 <= 0.25:
         y -= 20
     elif time() - jumptimer1 <= 0.5:
@@ -119,12 +125,14 @@ while running:
     screen.blit(back1,(0,0))
     #draws player 1
     o1_1,o1_2 = (False,False) if not dir1 else (True,False) #orientation of direction facing for player 1
-    if time() - attacktimer1 < 0.5:
-        #attack animation and damage handling
-        screen.blit(transform.flip(luffypunchanims[int((time()-attacktimer1)/0.085)],o1_1,o1_2),(x,y))
-        if punchrect1.move(x+dir1*(width-punchrect1.width),y).colliderect(Rect(x2,y2,width2,height2)) and time() - damagetimer2 > 0.6:
-            hp2 -= 5
-            damagetimer2 = time()
+
+    if luffycurattack != None:
+        if time() - attacktimer1 < luffycurattack.time:
+            #attack animation and damage handling
+            screen.blit(transform.flip(luffypunchanims[int((time()-attacktimer1)/0.085)],o1_1,o1_2),(x,y))
+            if punchrect1.move(x+dir1*(width-punchrect1.width),y).colliderect(Rect(x2,y2,width2,height2)) and time() - damagetimer2 > 0.6:
+                hp2 -= luffycurattack.damage
+                damagetimer2 = time()
     else:
         screen.blit(transform.flip(luffy1,o1_1,o1_2),(x,y))
     draw.rect(screen,BLACK,(x2,y2,width2,height2))#draws player 2
