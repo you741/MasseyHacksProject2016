@@ -1,9 +1,11 @@
 import os
 from pygame import *
-from time import *
 from moves import *
+from loading import *
+from time import *
 os.environ['SDL_VIDEO_WINDOW_POS'] = '70,25'
 screen = display.set_mode((1200,730))
+loadingscreen(screen)
 #====COLOR====#
 BLACK  = (0,0,0)
 RED = (255,0,0)
@@ -17,12 +19,10 @@ luffyanims = [[image.load("images/ru1.png"),
                  image.load("images/ru3.png"),
                  image.load("images/ru4.png"),
                  image.load("images/ru5.png")],
-                   [image.load("images/luffypunchstart.png"),
-                   image.load("images/Luffypunch1.png"),
-                   image.load("images/Luffypunch2.png"),
-                   image.load("images/Luffypunch3.png"),
-                   image.load("images/Luffypunch4.png"),
-                   image.load("images/luffypunchend.png")]]
+               [image.load("images/Luffypunch1.png"),
+               image.load("images/Luffypunch2.png"),
+               image.load("images/Luffypunch3.png"),
+               image.load("images/Luffypunch4.png")]]
 
 screen.blit(back1,(0,0))
 
@@ -40,6 +40,7 @@ moving = True
 punchrect1 = Rect(0,0,280,30)
 dir1 = 0 #direction 0 = right; 1 is left
 hp1,maxhp1 = 100,100
+energy,maxenergy = 100,100
 jumptimer1 = 0
 attacktimer1 = 0
 luffycurattack = None
@@ -47,6 +48,7 @@ luffycurattack = None
 x2,y2 = 900,500
 width2,height2 = 100,100
 hp2,maxhp2 = 100,100
+energy,maxenergy = 100,100
 jumptimer2 = 0
 damagetimer2 = 0
 #====ENEMIES====#
@@ -115,7 +117,6 @@ while running:
             luffycurattack = None
 
 
-
             
     if time() - jumptimer1 <= 0.25:
         y -= 20
@@ -149,12 +150,12 @@ while running:
         if time() - attacktimer1 < luffycurattack.time:
             #attack animation and damage handling
             screen.blit(transform.flip(luffyanims[luffycurattack.animsindex][int((time()-attacktimer1)/(luffycurattack.cooldown/len(luffyanims[luffycurattack.animsindex])+0.02))],o1_1,o1_2),(x,y))
-
-            if punchrect1.move(x+dir1*(width-punchrect1.width),y).colliderect(Rect(x2,y2,width2,height2)) and time() - damagetimer2 > 0.6:
+            #following if statement checks if enemy collides with luffy's current attack rect
+            if punchrect1.move(x+dir1*(width-punchrect1.width),y+10).colliderect(Rect(x2,y2,width2,height2)) and time() - damagetimer2 > 0.6:
                 hp2 -= luffycurattack.damage
                 damagetimer2 = time()
     elif moving:
-        screen.blit(transform.flip(luffyanims[0][int(time()%1/0.2)],o1_1,o1_2),(x,y))
+        screen.blit(transform.flip(luffyanims[0][int(time()%0.5/0.1)],o1_1,o1_2),(x,y))
     else:
         screen.blit(transform.flip(luffy1,o1_1,o1_2),(x,y))
     draw.rect(screen,BLACK,(x2,y2,width2,height2))#draws player 2
