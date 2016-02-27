@@ -49,13 +49,15 @@ screen.blit(back1,(0,0))
 #====Characters====#
 ##anims, sprite, curattack, x,y,width, height, maxenergy, maxhp, jumpspeed, 
 luffy = Character(luffyanims,luffy1,None,0,0,luffy1.get_width(),luffy1.get_height(),100,100,0)
-zorro = Character(zorroanims,zorro1,None,0,0,zorro1.get_width(),zorro1.get_width(),100,200,0)
+zorro = Character(zorroanims,zorro1,None,0,0,zorro1.get_width(),zorro1.get_width(),100,100,0)
 
 #====Moves====#
 #damage, energy, time, cooldown, animsindex, dx,dy, width, height
+
 punch = Move( 5, 10, 0.5, 0.6, 2, 0, 10, 280, 30)
 kick = Move( 10, 30, 0.5, 0.9, 3, 0, 140, 280, 30)
 swing = Move(7, 50, 0.5, 1, 4, 0, 20, 280, 50)
+
 
 
 #====P1 VAR====#
@@ -169,7 +171,7 @@ while running:
     if kp[K_RETURN] and player2.curattack == None:
         #punch
         attacktimer2 = time()
-        player2.curattack = punch
+        player2.curattack = sword
     if player2.curattack != None:
         if time()-attacktimer2 > player2.curattack.cooldown:
             player2.curattack = None
