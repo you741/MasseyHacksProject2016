@@ -7,8 +7,10 @@ screen = display.set_mode((1200,730))
 BLACK  = (0,0,0)
 #====IMAGES====#
 back1 = image.load("images/background1.png")
+luffy1 = transform.scale(image.load('images/luffy1.png'),(242,198))
 #====MC VAR====#
 x,y = 600,500
+width,height = luffy1.get_width(),luffy1.get_height()
 screen.blit(back1,(0,0))
 screen.set_clip(Rect(0,0,1200,730))
 running = True
@@ -22,6 +24,6 @@ while running:
     if kp[K_LEFT] and x > 600:
         x -= 10
     screen.blit(back1,(x*-1+600,0))
-    draw.circle(screen,BLACK,(600,500),10)
+    screen.blit(luffy1,(600-width//2,y))
     display.flip()
 quit()
