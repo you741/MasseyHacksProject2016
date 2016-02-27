@@ -34,7 +34,7 @@ screen.blit(back1,(0,0))
 
 #====Characters====#
 ##anims, sprite, curattack, width, height, maxenergy, maxhp, jumpspeed, 
-luffy = Character(luffyanims,luffy1,None,242,198,100,100,0)
+luffy = Character(luffyanims,luffy1,None,100,175,100,100,0)
 
 #====Moves====#
 #damage, energy, time, cooldown, animsindex, dx,dy, width, height
