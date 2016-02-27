@@ -148,13 +148,13 @@ while running:
     if luffycurattack != None:
         if time() - attacktimer1 < luffycurattack.time:
             #attack animation and damage handling
-            screen.blit(transform.flip(luffyanims[luffycurattack.animsindex][int((time()-attacktimer1)/(luffycurattack.cooldown/len(luffypunchanims)+0.02))],o1_1,o1_2),(x,y))
+            screen.blit(transform.flip(luffyanims[luffycurattack.animsindex][int((time()-attacktimer1)/(luffycurattack.cooldown/len(luffyanims[luffycurattack.animsindex)+0.02))],o1_1,o1_2),(x,y))
 
             if punchrect1.move(x+dir1*(width-punchrect1.width),y).colliderect(Rect(x2,y2,width2,height2)) and time() - damagetimer2 > 0.6:
                 hp2 -= luffycurattack.damage
                 damagetimer2 = time()
     elif moving:
-        screen.blit(transform.flip(luffyrunanims[int(time()%1/0.2)],o1_1,o1_2),(x,y))
+        screen.blit(transform.flip(luffyanims[0][int(time()%1/0.2)],o1_1,o1_2),(x,y))
     else:
         screen.blit(transform.flip(luffy1,o1_1,o1_2),(x,y))
     draw.rect(screen,BLACK,(x2,y2,width2,height2))#draws player 2
