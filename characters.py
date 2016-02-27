@@ -16,3 +16,5 @@ class Character ():
         self.y = y
         self.hitbox = Rect(x,y,width,height)
         
+    def get_instance(self):
+        return Character(self.anims,self.sprite,self.curattack,self.width,self.height,self.maxenergy,self.maxhp,self.jumpseed)
