@@ -35,5 +35,3 @@ def loadingscreen(screen):
             return 0
     ########ADD CODE#########
         display.flip()
-font.quit()
-quit()
