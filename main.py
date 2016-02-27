@@ -1,6 +1,7 @@
 import os
 from pygame import *
 from moves import *
+from characters import *
 from loading import *
 from time import *
 os.environ['SDL_VIDEO_WINDOW_POS'] = '70,25'
@@ -12,6 +13,7 @@ RED = (255,0,0)
 GREEN = (0,255,0)
 #====IMAGES====#
 back1 = image.load("images/background1.png")
+
 luffy1 = transform.smoothscale(image.load("images/luffy1.png"),(242,198))
 
 luffyanims = [[image.load("images/ru1.png"),
@@ -26,6 +28,10 @@ luffyanims = [[image.load("images/ru1.png"),
 
 screen.blit(back1,(0,0))
 
+#====Characters====#
+##anims, sprite, curattack, width, height, maxenergy, maxhp, jumpspeed, 
+luffy = Character(luffyanims,luffy1,None,242,198,100,100,0)
+
 #====Moves====#
 punch = Move( 5, 0, 0.5, 0.6, 1, 0, 10, 280, 30)
 kick = Move( 10, 0, 0.5, 0.6, 1, 0, 140, 280, 30)
@@ -33,9 +39,9 @@ swing = Move(7, 0, 0.5, 1, 1, 0, 20, 280, 50)
 
 
 #====P1 VAR====#
-luffy1 = transform.scale(image.load('images/luffy1.png'),(242,198))
+player1 = luffy
 x,y = 300,500
-width,height = luffy1.get_width(),luffy1.get_height()
+width,height = player1.width, player1.height
 moving = True
 punchrect1 = Rect(0,0,280,30)
 dir1 = 0 #direction 0 = right; 1 is left
