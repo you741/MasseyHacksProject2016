@@ -66,7 +66,7 @@ moving = True
 #punchrect1 = Rect(0,0,280,30)
 dir2 = 0 #direction 0 = right; 1 is left
 hp2,maxhp2 = 100,100
-energy2,maxenergy2 = 100,100
+energy,maxenergy = 100,100
 jumptimer2 = 0
 attacktimer2 = 0
 player2.curattack = None
@@ -105,21 +105,21 @@ while running:
             running = False
     kp = key.get_pressed()
     #P1 CONTROLS
-    nx = x #new x
+    nx = player1.x #new x
     moving = False
     if kp[K_d] and x+width < 1200:
         #right move
         moving = True
-        nx = x+10
+        nx += 10
         dir1 = 0
     if kp[K_a] and x > 0:
         #left move
         moving = True
-        nx = x-10
+        nx -= 10
         dir1 = 1
     #makes sure we do not collide with enemy
     if not Rect(nx,y,width,height).colliderect(Rect(x2,y2,width2,height2)):
-        x = nx
+        player1.x = nx
     if kp[K_w] and time() - jumptimer1 > 0.6:
         #jump
         jumptimer1 = time()
@@ -142,11 +142,11 @@ while running:
             player1.curattack = None
     #actual jump movement
     if time() - jumptimer1 <= 0.25:
-        y -= 40
+        player1.y -= 40
     elif time() - jumptimer1 <= 0.5:
-        y += 40
+        player1.y += 40
     else:
-        y = 500
+        player1.y = 500
     #P2 CONTROLS
     nx2 = player2.x
     moving2 = False
@@ -175,18 +175,18 @@ while running:
 
     if player1.curattack != None and time() - attacktimer1 < player1.curattack.time:
         #attack animation and damage handling
-        screen.blit(transform.flip(player1.anims[player1.curattack.animsindex][int((time()-attacktimer1)/(player1.curattack.time/len(player1.anims[player1.curattack.animsindex])+0.01))],o1_1,o1_2),(x,y))
+        screen.blit(transform.flip(player1.anims[player1.curattack.animsindex][int((time()-attacktimer1)/(player1.curattack.time/len(player1.anims[player1.curattack.animsindex])+0.01))],o1_1,o1_2),(player1.x,player1.y))
         #following if statement checks if enemy collides with player1.'s current attack rect
         punchrect1 = player1.curattack.hitbox
-#            draw.rect(screen,BLACK,punchrect1.move(x+dir1*(width-punchrect1.width),y+10),1)
-        if punchrect1.move(x+dir1*(width-punchrect1.width),y+10).colliderect(Rect(x2,y2,width2,height2)) and time() - damagetimer2 > 0.6:
+        #draw.rect(screen,BLACK,punchrect1.move(player1.x+dir1*(width-punchrect1.width),player1.y+10),1)
+        if punchrect1.move(player1.x+dir1*(width-punchrect1.width),player1.y+10).colliderect(Rect(player2.x,player2.y,player2.width,player2.height)) and time() - damagetimer2 > 0.6:
             hp2 -= player1.curattack.damage
             damagetimer2 = time()
             
     elif moving:
-        screen.blit(transform.flip(player1.anims[0][int(time()%0.5/0.1)],o1_1,o1_2),(x,y))
+        screen.blit(transform.flip(player1.anims[0][int(time()%0.5/0.1)],o1_1,o1_2),(player1.x,player1.y))
     else:
-        screen.blit(transform.flip(player1.sprite,o1_1,o1_2),(x,y))
+        screen.blit(transform.flip(player1.sprite,o1_1,o1_2),(player1.x,player1.y))
 
         
     #draws player 2
@@ -220,9 +220,6 @@ while running:
     #energy bars
     draw.rect(screen,RED,Rect(50,100,450,50))
     draw.rect(screen,RED,Rect(700,100,450,50))
-    draw.rect(screen,GREEN,Rect(50,100,int(450*(energy/maxenergy)),50))
-    draw.rect(screen,GREEN,Rect(700,100,int(450*(energy2/maxenergy2)),50))
-
     
     display.flip()
 font.quit() #deletes font
