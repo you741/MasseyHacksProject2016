@@ -7,5 +7,5 @@ class Move:
         self.time = time
         self.cooldown = cooldown
         self.animsindex = animsindex
-        hitbox = Rect(0,0,width,height)
+        hitbox = Rect(dx,dy,width,height)
         self.hitbox = hitbox

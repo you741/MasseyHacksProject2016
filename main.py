@@ -28,7 +28,7 @@ screen.blit(back1,(0,0))
 
 #====Moves====#
 punch = Move( 5, 0, 0.5, 0.6, 1, 0, 10, 280, 30)
-kick = Move( 10, 0, 0.5, 2, 1, 0, 198-30, 280, 30)
+kick = Move( 10, 0, 0.5, 0.6, 1, 0, 140, 280, 30)
 swing = Move(7, 0, 0.5, 1, 1, 0, 20, 280, 50)
 
 
@@ -151,6 +151,8 @@ while running:
             #attack animation and damage handling
             screen.blit(transform.flip(luffyanims[luffycurattack.animsindex][int((time()-attacktimer1)/(luffycurattack.cooldown/len(luffyanims[luffycurattack.animsindex])+0.02))],o1_1,o1_2),(x,y))
             #following if statement checks if enemy collides with luffy's current attack rect
+            punchrect1 = luffycurattack.hitbox
+#            draw.rect(screen,(0,0,0),punchrect1.move(x+dir1*(width-punchrect1.width),y+10))
             if punchrect1.move(x+dir1*(width-punchrect1.width),y+10).colliderect(Rect(x2,y2,width2,height2)) and time() - damagetimer2 > 0.6:
                 hp2 -= luffycurattack.damage
                 damagetimer2 = time()
