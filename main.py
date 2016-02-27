@@ -55,7 +55,7 @@ hp1,maxhp1 = 100,100
 energy,maxenergy = 100,100
 jumptimer1 = 0
 attacktimer1 = 0
-luffycurattack = None
+player1.curattack = None
 #====P2 VAR====#
 x2,y2 = 900,500
 width2,height2 = 100,240
@@ -111,21 +111,21 @@ while running:
         jumptimer1 = time()
         
     #MOVES OF P1 setting to attack
-    if kp[K_e] and luffycurattack == None:
+    if kp[K_e] and player1.curattack == None:
         #punch
         attacktimer1 = time()
-        luffycurattack = punch
-    if kp[K_q] and luffycurattack == None:
+        player1.curattack = punch
+    if kp[K_q] and player1.curattack == None:
         #kick
         attacktimer1 = time()
-        luffycurattack = kick
-    if kp[K_r] and luffycurattack == None:
+        player1.curattack = kick
+    if kp[K_r] and player1.curattack == None:
         #swing
         attacktimer1 = time()
-        luffycurattack = swing
-    if luffycurattack != None:
-        if time()-attacktimer1 > luffycurattack.cooldown:
-            luffycurattack = None
+        player1.curattack = swing
+    if player1.curattack != None:
+        if time()-attacktimer1 > player1.curattack.cooldown:
+            player1.curattack = None
     #actual jump movement
     if time() - jumptimer1 <= 0.25:
         y -= 40
@@ -155,20 +155,20 @@ while running:
     #draws player 1
     o1_1,o1_2 = (False,False) if not dir1 else (True,False) #orientation of direction facing for player 1
 
-    if luffycurattack != None:
-        if time() - attacktimer1 < luffycurattack.time:
+    if player1.curattack != None:
+        if time() - attacktimer1 < player1.curattack.time:
             #attack animation and damage handling
-            screen.blit(transform.flip(luffyanims[luffycurattack.animsindex][int((time()-attacktimer1)/(luffycurattack.time/len(luffyanims[luffycurattack.animsindex])+0.01))],o1_1,o1_2),(x,y))
-            #following if statement checks if enemy collides with luffy's current attack rect
-            punchrect1 = luffycurattack.hitbox
+            screen.blit(transform.flip(player1.anims[player1.curattack.animsindex][int((time()-attacktimer1)/(player1.curattack.time/len(player1.anims[player1.curattack.animsindex])+0.01))],o1_1,o1_2),(x,y))
+            #following if statement checks if enemy collides with player1.'s current attack rect
+            punchrect1 = player1.curattack.hitbox
 #            draw.rect(screen,BLACK,punchrect1.move(x+dir1*(width-punchrect1.width),y+10),1)
             if punchrect1.move(x+dir1*(width-punchrect1.width),y+10).colliderect(Rect(x2,y2,width2,height2)) and time() - damagetimer2 > 0.6:
-                hp2 -= luffycurattack.damage
+                hp2 -= player1.curattack.damage
                 damagetimer2 = time()
     elif moving:
-        screen.blit(transform.flip(luffyanims[0][int(time()%0.5/0.1)],o1_1,o1_2),(x,y))
+        screen.blit(transform.flip(player1.anims[0][int(time()%0.5/0.1)],o1_1,o1_2),(x,y))
     else:
-        screen.blit(transform.flip(luffy1,o1_1,o1_2),(x,y))
+        screen.blit(transform.flip(player1.sprite,o1_1,o1_2),(x,y))
     draw.rect(screen,BLACK,(x2,y2,width2,height2))#draws player 2
     #limits hp
     hp2 = max(0,hp2)
