@@ -38,9 +38,9 @@ luffy = Character(luffyanims,luffy1,None,0,0,242,198,100,100,0)
 
 #====Moves====#
 #damage, energy, time, cooldown, animsindex, dx,dy, width, height
-punch = Move( 5, 0, 0.5, 0.6, 1, 0, 10, 280, 30)
-kick = Move( 10, 0, 0.5, 0.6, 1, 0, 140, 280, 30)
-swing = Move(7, 0, 0.5, 1, 2, 0, 20, 280, 50)
+punch = Move( 5, 10, 0.5, 0.6, 1, 0, 10, 280, 30)
+kick = Move( 10, 30, 0.5, 0.6, 1, 0, 140, 280, 30)
+swing = Move(7, 50, 0.5, 1, 2, 0, 20, 280, 50)
 
 
 #====P1 VAR====#
