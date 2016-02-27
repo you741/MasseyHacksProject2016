@@ -115,8 +115,6 @@ while running:
     if luffycurattack != None:
         if time()-attacktimer1 > luffycurattack.cooldown:
             luffycurattack = None
-
-
             
     if time() - jumptimer1 <= 0.25:
         y -= 20
