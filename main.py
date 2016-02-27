@@ -11,20 +11,25 @@ GREEN = (0,255,0)
 #====IMAGES====#
 back1 = image.load("images/background1.png")
 luffy1 = transform.smoothscale(image.load("images/luffy1.png"),(242,198))
-luffypunchanims = [image.load("images/Luffypunch1.png"),
-                   image.load("images/Luffypunch2.png"),
-                   image.load("images/Luffypunch3.png"),
-                   image.load("images/Luffypunch4.png")]
-luffyrunanims = [image.load("images/ru1.png"),
+
+luffyanims = [[image.load("images/ru1.png"),
                  image.load("images/ru2.png"),
                  image.load("images/ru3.png"),
                  image.load("images/ru4.png"),
-                 image.load("images/ru5.png")]
+                 image.load("images/ru5.png")],
+                   [image.load("images/luffypunchstart.png"),
+                   image.load("images/Luffypunch1.png"),
+                   image.load("images/Luffypunch2.png"),
+                   image.load("images/Luffypunch3.png"),
+                   image.load("images/Luffypunch4.png"),
+                   image.load("images/luffypunchend.png")]]
+
 screen.blit(back1,(0,0))
 
 #====Moves====#
-punch = Move( 5, 0, 0.5, 0.6)
-kick = Move( 10, 0, 0.5, 2)
+punch = Move( 5, 0, 0.5, 0.6, 0)
+kick = Move( 10, 0, 0.5, 2, 0)
+swing = Move(7, 0, 0.5, 1, 0)
 
 
 #====P1 VAR====#
@@ -90,6 +95,7 @@ while running:
     if kp[K_w] and time() - jumptimer1 > 0.6:
         #jump
         jumptimer1 = time()
+        
     #MOVES OF P1 setting to attack
     if kp[K_e] and luffycurattack == None:
         #punch
@@ -99,10 +105,16 @@ while running:
         #kick
         attacktimer1 = time()
         luffycurattack = kick
+    if kp[K_r] and luffycurattack == None:
+        #swing
+        attacktimer1 = time()
+        luffycurattack = swing
 
     if luffycurattack != None:
         if time()-attacktimer1 > luffycurattack.cooldown:
             luffycurattack = None
+
+
 
             
     if time() - jumptimer1 <= 0.25:
@@ -136,7 +148,8 @@ while running:
     if luffycurattack != None:
         if time() - attacktimer1 < luffycurattack.time:
             #attack animation and damage handling
-            screen.blit(transform.flip(luffypunchanims[int((time()-attacktimer1)/(luffycurattack.cooldown/len(luffypunchanims)+0.02))],o1_1,o1_2),(x,y))
+            screen.blit(transform.flip(luffyanims[luffycurattack.animsindex][int((time()-attacktimer1)/(luffycurattack.cooldown/len(luffypunchanims)+0.02))],o1_1,o1_2),(x,y))
+
             if punchrect1.move(x+dir1*(width-punchrect1.width),y).colliderect(Rect(x2,y2,width2,height2)) and time() - damagetimer2 > 0.6:
                 hp2 -= luffycurattack.damage
                 damagetimer2 = time()
