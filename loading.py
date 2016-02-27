@@ -1,5 +1,6 @@
 import os
 from pygame import *
+from time import *
 
 os.environ['SDL_VIDEO_WINDOW_POS'] = '70,25'
 screen = display.set_mode((1200,730))
@@ -32,7 +33,8 @@ while running:
         if kp[K_RETURN]:
             loading = False
     else:
-########ADD CODE#########
+        screen.fill((0,0,0))
+        
     display.flip()
 font.quit()
 quit()
