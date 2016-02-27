@@ -66,7 +66,7 @@ moving = True
 #punchrect1 = Rect(0,0,280,30)
 dir2 = 0 #direction 0 = right; 1 is left
 hp2,maxhp2 = 100,100
-energy,maxenergy = 100,100
+energy2,maxenergy2 = 100,100
 jumptimer2 = 0
 attacktimer2 = 0
 player2.curattack = None
@@ -220,6 +220,9 @@ while running:
     #energy bars
     draw.rect(screen,RED,Rect(50,100,450,50))
     draw.rect(screen,RED,Rect(700,100,450,50))
+    draw.rect(screen,GREEN,Rect(50,100,int(450*(energy/maxenergy)),50))
+    draw.rect(screen,GREEN,Rect(700,100,int(450*(energy2/maxenergy2)),50))
+
     
     display.flip()
 font.quit() #deletes font
