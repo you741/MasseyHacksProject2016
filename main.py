@@ -11,12 +11,15 @@ GREEN = (0,255,0)
 #====IMAGES====#
 back1 = image.load("images/background1.png")
 luffy1 = transform.smoothscale(image.load("images/luffy1.png"),(242,198))
-luffypunchanims = [image.load("images/luffypunchstart.png"),
-                   image.load("images/Luffypunch1.png"),
+luffypunchanims = [image.load("images/Luffypunch1.png"),
                    image.load("images/Luffypunch2.png"),
                    image.load("images/Luffypunch3.png"),
-                   image.load("images/Luffypunch4.png"),
-                   image.load("images/luffypunchend.png")]
+                   image.load("images/Luffypunch4.png")]
+luffyrunanims = [image.load("images/ru1.png"),
+                 image.load("images/ru2.png"),
+                 image.load("images/ru3.png"),
+                 image.load("images/ru4.png"),
+                 image.load("images/ru5.png")]
 screen.blit(back1,(0,0))
 
 #====Moves====#
@@ -28,6 +31,7 @@ kick = Move( 10, 0, 0.7, 0.9)
 luffy1 = transform.scale(image.load('images/luffy1.png'),(242,198))
 x,y = 300,500
 width,height = luffy1.get_width(),luffy1.get_height()
+moving = True
 punchrect1 = Rect(0,0,280,30)
 dir1 = 0 #direction 0 = right; 1 is left
 hp1,maxhp1 = 100,100
@@ -69,12 +73,15 @@ while running:
     kp = key.get_pressed()
     #P1 CONTROLS
     nx = x #new x
+    moving = False
     if kp[K_d] and x+width < 1200:
         #right move
+        moving = True
         nx = x+10
         dir1 = 0
     if kp[K_a] and x > 0:
         #left move
+        moving = True
         nx = x-10
         dir1 = 1
     #makes sure we do not collide with enemy
@@ -121,10 +128,12 @@ while running:
     o1_1,o1_2 = (False,False) if not dir1 else (True,False) #orientation of direction facing for player 1
     if time() - attacktimer1 < 0.5:
         #attack animation and damage handling
-        screen.blit(transform.flip(luffypunchanims[int((time()-attacktimer1)/0.085)],o1_1,o1_2),(x,y))
+        screen.blit(transform.flip(luffypunchanims[int((time()-attacktimer1)/(0.5/len(luffypunchanims)+0.02))],o1_1,o1_2),(x,y))
         if punchrect1.move(x+dir1*(width-punchrect1.width),y).colliderect(Rect(x2,y2,width2,height2)) and time() - damagetimer2 > 0.6:
             hp2 -= 5
             damagetimer2 = time()
+    elif moving:
+        screen.blit(transform.flip(luffyrunanims[int(time()%1/0.2)],o1_1,o1_2),(x,y))
     else:
         screen.blit(transform.flip(luffy1,o1_1,o1_2),(x,y))
     draw.rect(screen,BLACK,(x2,y2,width2,height2))#draws player 2
