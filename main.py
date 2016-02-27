@@ -9,6 +9,9 @@ BLACK  = (0,0,0)
 back1 = image.load("images/background1.png")
 luffy1 = transform.smoothscale(image.load("images/luffy1.png"),(242,198))
 #====P1 VAR====#
+=======
+luffy1 = transform.scale(image.load('images/luffy1.png'),(242,198))
+#====MC VAR====#
 x,y = 600,500
 width,height = luffy1.get_width(),luffy1.get_height()
 screen.blit(back1,(0,0))
@@ -67,5 +70,6 @@ while running:
     #health bars
     draw.rect(screen,(0,255,0),hpbar1)
     draw.rect(screen,(0,255,0),hpbar2)
+    screen.blit(luffy1,(600-width//2,y))
     display.flip()
 quit()
