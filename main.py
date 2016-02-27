@@ -1,6 +1,7 @@
 import os
 from pygame import *
 from time import *
+from moves import *
 os.environ['SDL_VIDEO_WINDOW_POS'] = '70,25'
 screen = display.set_mode((1200,730))
 #====COLOR====#
@@ -33,6 +34,11 @@ hp2,maxhp2 = 100,100
 jumptimer2 = 0
 damagetimer2 = 0
 #====ENEMIES====#
+
+
+#====Moves====#
+punch = Move( 5, 0, 0.5, 0.6)
+kick = Move( 10, 0, 0.7, 0.9)
 
 #====GAME PLAY FUNCTION====#
 #====ANIMATION FUNCTION====#
