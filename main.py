@@ -81,7 +81,6 @@ player2.energy = player2.maxenergy
 jumptimer2 = 0
 attacktimer2 = 0
 player2.curattack = None
-
 player2.x,player2.y = 900,500
 player2.energy = player2.maxenergy
 jumptimer2 = 0
