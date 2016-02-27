@@ -1,5 +1,6 @@
 import os
 from pygame import *
+from time import *
 
 os.environ['SDL_VIDEO_WINDOW_POS'] = '70,25'
 screen = display.set_mode((1200,730))
@@ -21,7 +22,6 @@ def loadingscreen(screen):
     screen.blit(titlePic,(100, 150))
     screen.blit(subtitlePic,(250, 300))
     screen.blit(startPic,(425, 600))
-
     running = True
     while running:
         for e in event.get():
