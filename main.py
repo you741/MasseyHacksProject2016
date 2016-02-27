@@ -15,7 +15,7 @@ GREEN = (0,255,0)
 back1 = image.load("images/background1.png")
 
 luffy1 = image.load('images/luffy1.png')
-zorro1 = image.load("images/z.png")
+zorro1 = transform.smoothscale(transform.flip(image.load("images/z.png"),True,False),(120,200))
 
 luffyanims = [image.load("images/jump.png"),
               [image.load("images/ru1.png"),
@@ -33,13 +33,20 @@ luffyanims = [image.load("images/jump.png"),
               [image.load("images/rf1.png"),
                image.load("images/rf2.png"),
                image.load("images/rf3.png")]]
-#zorroanims = [[image.load("images/
+zorroanims = [transform.flip(image.load("images/zjump.png"),True,False),
+              [transform.flip(image.load("images/zrun1.png"),True,False),
+               transform.flip(image.load("images/zrun2.png"),True,False),
+               transform.flip(image.load("images/zrun3.png"),True,False),
+               transform.flip(image.load("images/zrun4.png"),True,False)],
+              [image.load("images/zr1.png"),
+               image.load("images/zr2.png"),
+               image.load("images/zr3.png")]]
 screen.blit(back1,(0,0))
 
 #====Characters====#
 ##anims, sprite, curattack, x,y,width, height, maxenergy, maxhp, jumpspeed, 
-luffy = Character(luffyanims,luffy1,None,0,0,242,198,100,100,0)
-
+luffy = Character(luffyanims,luffy1,None,0,0,luffy1.get_width(),luffy1.get_height(),100,100,0)
+zorro = Character(zorroanims,zorro1,None,0,0,zorro1.get_width(),zorro1.get_width(),100,200,0)
 
 #====Moves====#
 #damage, energy, time, cooldown, animsindex, dx,dy, width, height
@@ -61,7 +68,7 @@ jumptimer1 = 0
 attacktimer1 = 0
 player1.curattack = None
 #====P2 VAR====#
-player2 = luffy.get_instance()
+player2 = zorro.get_instance()
 width2,height2 = player2.width, player2.height
 player2.x, player2.y = 900,500
 moving2 = True
@@ -99,8 +106,6 @@ damagetimer2 = 0
 ##        sleep(0.1)
 font.init() #Starts font
 tymeFont = font.SysFont("Arial", 30)
-hpbar1 = Rect(50,50,450,50)
-hpbar2 = Rect(700,50,450,50)
 running = True
 while running:
     for e in event.get():
@@ -161,6 +166,13 @@ while running:
         nx2 -= 10
         moving2 = True
         dir2 = 1
+    if kp[K_RETURN] and player2.curattack == None:
+        #punch
+        attacktimer2 = time()
+        player2.curattack = punch
+    if player2.curattack != None:
+        if time()-attacktimer2 > player2.curattack.cooldown:
+            player2.curattack = None
     #makes sure we do not collide with enemy
     if not Rect(nx2,player2.y,player2.width,player2.height).colliderect(Rect(player1.x,player1.y,player1.width,player1.height)):
         player2.x = nx2
@@ -188,7 +200,7 @@ while running:
     elif time() - jumptimer1 <= 0.5:
         screen.blit(transform.flip(player1.anims[0],o1_1,o1_2),(player1.x,player1.y)) 
     elif moving:
-        screen.blit(transform.flip(player1.anims[1][int(time()%0.5/0.1)],o1_1,o1_2),(player1.x,player1.y))
+        screen.blit(transform.flip(player1.anims[1][int(time()%(0.5/len(player1.anims[1])))],o1_1,o1_2),(player1.x,player1.y))
     else:
         screen.blit(transform.flip(player1.sprite,o1_1,o1_2),(player1.x,player1.y))
 
@@ -203,13 +215,13 @@ while running:
             #following if statement checks if enemy collides with player1.'s current attack rect
             punchrect2 = player2.curattack.hitbox
 #            draw.rect(screen,BLACK,punchrect1.move(x+dir1*(width-punchrect1.width),y+10),1)
-            if punchrect2.move(x+dir2*(width-punchrect1.width),y+10).colliderect(player1.hitbox) and time() - damagetimer1 > 0.6:
+            if punchrect2.move(player2.x+dir2*(width-punchrect2.width),player2.y+10).colliderect(player1.hitbox) and time() - damagetimer1 > 0.6:
                 hp1 -= player2.curattack.damage
                 damagetimer1 = time()
     elif time() - jumptimer2 <= 0.5:
         screen.blit(transform.flip(player2.anims[0],o2_1,o2_2),(player2.x,player2.y))
     elif moving2:
-        screen.blit(transform.flip(player2.anims[1][int(time()%0.5/0.1)],o2_1,o2_2),(player2.x,player2.y))
+        screen.blit(transform.flip(player2.anims[1][int(time()%0.5/(0.5/len(player2.anims[1])))],o2_1,o2_2),(player2.x,player2.y))
     else:
         screen.blit(transform.flip(player2.sprite,o2_1,o2_2),(player2.x,player2.y))
 
