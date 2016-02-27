@@ -12,7 +12,6 @@ RED = (255,0,0)
 GREEN = (0,255,0)
 #====IMAGES====#
 back1 = image.load("images/background1.png")
-luffy1 = transform.smoothscale(image.load("images/luffy1.png"),(242,198))
 
 luffyanims = [[image.load("images/ru1.png"),
                  image.load("images/ru2.png"),
@@ -22,22 +21,26 @@ luffyanims = [[image.load("images/ru1.png"),
                [image.load("images/Luffypunch1.png"),
                image.load("images/Luffypunch2.png"),
                image.load("images/Luffypunch3.png"),
-               image.load("images/Luffypunch4.png")]]
+               image.load("images/Luffypunch4.png")],
+              [image.load("images/rf1.png"),
+               image.load("images/rf2.png"),
+               image.load("images/rf3.png")]]
 
 screen.blit(back1,(0,0))
 
 #====Moves====#
+#damage, energy, time, cooldown, animsindex, dx,dy, width, height
 punch = Move( 5, 0, 0.5, 0.6, 1, 0, 10, 280, 30)
 kick = Move( 10, 0, 0.5, 0.6, 1, 0, 140, 280, 30)
-swing = Move(7, 0, 0.5, 1, 1, 0, 20, 280, 50)
+swing = Move(7, 0, 0.5, 1, 2, 0, 20, 280, 50)
 
 
 #====P1 VAR====#
-luffy1 = transform.scale(image.load('images/luffy1.png'),(242,198))
+luffy1 = image.load('images/luffy1.png')
 x,y = 300,500
 width,height = luffy1.get_width(),luffy1.get_height()
 moving = True
-punchrect1 = Rect(0,0,280,30)
+#punchrect1 = Rect(0,0,280,30)
 dir1 = 0 #direction 0 = right; 1 is left
 hp1,maxhp1 = 100,100
 energy,maxenergy = 100,100
@@ -46,7 +49,7 @@ attacktimer1 = 0
 luffycurattack = None
 #====P2 VAR====#
 x2,y2 = 900,500
-width2,height2 = 100,100
+width2,height2 = 100,240
 hp2,maxhp2 = 100,100
 energy,maxenergy = 100,100
 jumptimer2 = 0
@@ -111,7 +114,6 @@ while running:
         #swing
         attacktimer1 = time()
         luffycurattack = swing
-
     if luffycurattack != None:
         if time()-attacktimer1 > luffycurattack.cooldown:
             luffycurattack = None
@@ -147,10 +149,10 @@ while running:
     if luffycurattack != None:
         if time() - attacktimer1 < luffycurattack.time:
             #attack animation and damage handling
-            screen.blit(transform.flip(luffyanims[luffycurattack.animsindex][int((time()-attacktimer1)/(luffycurattack.cooldown/len(luffyanims[luffycurattack.animsindex])+0.02))],o1_1,o1_2),(x,y))
+            screen.blit(transform.flip(luffyanims[luffycurattack.animsindex][int((time()-attacktimer1)/(luffycurattack.time/len(luffyanims[luffycurattack.animsindex])+0.01))],o1_1,o1_2),(x,y))
             #following if statement checks if enemy collides with luffy's current attack rect
             punchrect1 = luffycurattack.hitbox
-#            draw.rect(screen,(0,0,0),punchrect1.move(x+dir1*(width-punchrect1.width),y+10))
+#            draw.rect(screen,BLACK,punchrect1.move(x+dir1*(width-punchrect1.width),y+10),1)
             if punchrect1.move(x+dir1*(width-punchrect1.width),y+10).colliderect(Rect(x2,y2,width2,height2)) and time() - damagetimer2 > 0.6:
                 hp2 -= luffycurattack.damage
                 damagetimer2 = time()
@@ -167,6 +169,10 @@ while running:
     draw.rect(screen,RED,Rect(700,50,450,50))
     draw.rect(screen,GREEN,Rect(50,50,int(450*(hp1/maxhp1)),50))
     draw.rect(screen,GREEN,Rect(700,50,int(450*(hp2/maxhp2)),50))
+    #energy bars
+    draw.rect(screen,RED,Rect(50,100,450,50))
+    draw.rect(screen,RED,Rect(700,100,450,50))
+    #draw.rect(screen,
     
     display.flip()
 font.quit() #deletes font
