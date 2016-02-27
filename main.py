@@ -38,14 +38,13 @@ luffy = Character(luffyanims,luffy1,None,0,0,242,198,100,100,0)
 
 #====Moves====#
 #damage, energy, time, cooldown, animsindex, dx,dy, width, height
-punch = Move( 5, 10, 0.5, 0.6, 1, 0, 10, 280, 30)
-kick = Move( 10, 30, 0.5, 0.6, 1, 0, 140, 280, 30)
-swing = Move(7, 50, 0.5, 1, 2, 0, 20, 280, 50)
+punch = Move( 5, 0, 0.5, 0.6, 1, 0, 10, 280, 30)
+kick = Move( 10, 0, 0.5, 0.6, 1, 0, 140, 280, 30)
+swing = Move(7, 0, 0.5, 1, 2, 0, 20, 280, 50)
 
 
 #====P1 VAR====#
 player1 = luffy.get_instance()
-x,y = 300,500
 width,height = player1.width, player1.height
 player1.x, player1.y = 300,500
 moving = True
@@ -58,7 +57,6 @@ attacktimer1 = 0
 player1.curattack = None
 #====P2 VAR====#
 player2 = luffy.get_instance()
-x2,y2 = 900,500
 width2,height2 = player2.width, player2.height
 player2.x, player2.y = 900,500
 moving2 = True
@@ -107,18 +105,18 @@ while running:
     #P1 CONTROLS
     nx = player1.x #new x
     moving = False
-    if kp[K_d] and x+width < 1200:
+    if kp[K_d] and player1.x+width < 1200:
         #right move
         moving = True
         nx += 10
         dir1 = 0
-    if kp[K_a] and x > 0:
+    if kp[K_a] and player1.x > 0:
         #left move
         moving = True
         nx -= 10
         dir1 = 1
     #makes sure we do not collide with enemy
-    if not Rect(nx,y,width,height).colliderect(Rect(x2,y2,width2,height2)):
+    if not Rect(nx,player1.y,player1.width,player1.height).colliderect(Rect(player2.x,player2.y,player2.width,player2.height)):
         player1.x = nx
     if kp[K_w] and time() - jumptimer1 > 0.6:
         #jump
@@ -150,16 +148,16 @@ while running:
     #P2 CONTROLS
     nx2 = player2.x
     moving2 = False
-    if kp[K_RIGHT] and x2+width2 < 1200:
+    if kp[K_RIGHT] and player2.x+width2 < 1200:
         nx2 += 10
         moving2 = True
         dir2 = 0
-    if kp[K_LEFT] and x2 > 0:
+    if kp[K_LEFT] and player2.x > 0:
         nx2 -= 10
         moving2 = True
         dir2 = 1
     #makes sure we do not collide with enemy
-    if not Rect(nx2,y2,width2,height2).colliderect(Rect(x,y,width,height)):
+    if not Rect(nx2,player2.y,player2.width,player2.height).colliderect(Rect(player1.x,player1.y,player1.width,player1.height)):
         player2.x = nx2
     if kp[K_UP] and time() - jumptimer2 > 0.6:
         jumptimer2 = time()
