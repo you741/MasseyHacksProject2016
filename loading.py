@@ -23,7 +23,6 @@ def loadingscreen(screen):
     screen.blit(subtitlePic,(250, 300))
     screen.blit(startPic,(425, 600))
 
-<<<<<<< HEAD
 screen.blit(titlePic,(100, 150))
 screen.blit(subtitlePic,(250, 300))
 screen.blit(startPic,(425, 600))
@@ -43,18 +42,4 @@ while running:
     display.flip()
 font.quit()
 quit()
-=======
-    running = True
-    while running:
-        for e in event.get():
-            if e.type == QUIT:
-                running = False
-        kp = key.get_pressed()
-        if loading:
-            if kp[K_RETURN]:
-                loading = False
-        else:
-            return 0
-    ########ADD CODE#########
-        display.flip()
->>>>>>> origin/master
+
