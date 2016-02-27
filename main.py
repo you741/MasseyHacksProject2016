@@ -18,6 +18,12 @@ luffypunchanims = [image.load("images/luffypunchstart.png"),
                    image.load("images/Luffypunch4.png"),
                    image.load("images/luffypunchend.png")]
 screen.blit(back1,(0,0))
+
+#====Moves====#
+punch = Move( 5, 0, 0.5, 0.6)
+kick = Move( 10, 0, 0.7, 0.9)
+
+
 #====P1 VAR====#
 luffy1 = transform.scale(image.load('images/luffy1.png'),(242,198))
 x,y = 300,500
@@ -27,6 +33,7 @@ dir1 = 0 #direction 0 = right; 1 is left
 hp1,maxhp1 = 100,100
 jumptimer1 = 0
 attacktimer1 = 0
+luffycurattack = None
 #====P2 VAR====#
 x2,y2 = 900,500
 width2,height2 = 100,100
@@ -36,9 +43,6 @@ damagetimer2 = 0
 #====ENEMIES====#
 
 
-#====Moves====#
-punch = Move( 5, 0, 0.5, 0.6)
-kick = Move( 10, 0, 0.7, 0.9)
 
 #====GAME PLAY FUNCTION====#
 #====ANIMATION FUNCTION====#
@@ -79,9 +83,15 @@ while running:
     if kp[K_w] and time() - jumptimer1 > 0.6:
         #jump
         jumptimer1 = time()
-    if kp[K_e] and time() - attacktimer1 > 0.6:
+    #MOVES OF P1
+    if kp[K_e] and luffycurattack == None:
         #punch
         attacktimer1 = time()
+        luffycurattack = punch
+
+    if luffycurattack != None:
+        if time()-attacktimer1 > luffycurattack.cooldown:
+            luffycurattack = None
     if time() - jumptimer1 <= 0.25:
         y -= 20
     elif time() - jumptimer1 <= 0.5:
