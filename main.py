@@ -57,8 +57,7 @@ zorro = Character(zorroanims,zorro1,None,0,0,zorro1.get_width(),zorro1.get_width
 punch = Move( 5, 10, 0.5, 0.6, 2, 0, 10, 280, 30)
 kick = Move( 10, 30, 0.5, 0.9, 3, 0, 140, 280, 30)
 swing = Move(7, 50, 0.5, 1, 4, 0, 20, 280, 50)
-
-
+slash = Move(8,40,0.7,0.8,2,0,20,230,70)
 
 #====P1 VAR====#
 player1 = luffy.get_instance()
@@ -171,7 +170,7 @@ while running:
     if kp[K_RETURN] and player2.curattack == None:
         #punch
         attacktimer2 = time()
-        player2.curattack = sword
+        player2.curattack = slash
     if player2.curattack != None:
         if time()-attacktimer2 > player2.curattack.cooldown:
             player2.curattack = None
