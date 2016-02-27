@@ -22,5 +22,6 @@ while running:
     if kp[K_LEFT] and x > 600:
         x -= 10
     screen.blit(back1,(x*-1+600,0))
+    draw.circle(screen,BLACK,(600,500),10)
     display.flip()
 quit()
