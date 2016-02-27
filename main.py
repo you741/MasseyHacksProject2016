@@ -18,7 +18,7 @@ GREEN = (0,255,0)
 back1 = image.load("images/background1.png")
 
 luffy1 = image.load('images/luffy1.png')
-zorro1 = transform.flip(image.load("images/z.png"),True,False)
+zorro1 = transform.smoothscale(transform.flip(image.load("images/z.png"),True,False),(120,200))
 
 luffyanims = [image.load("images/jump.png"),
               [image.load("images/ru1.png"),
@@ -142,10 +142,12 @@ while running:
         attacktimer1 = time()
         player1.curattack = kick
         player1.energy -= kick.energy
-    if kp[K_r] and player1.curattack == None:
+        
+    if kp[K_r] and player1.curattack == None and player1.energy > swing.energy:
         #swing
         attacktimer1 = time()
         player1.curattack = swing
+        player1.energy -= swing.energy
     if player1.curattack != None:
         if time()-attacktimer1 > player1.curattack.cooldown:
             player1.curattack = None
@@ -167,10 +169,11 @@ while running:
         nx2 -= 10
         moving2 = True
         dir2 = 1
-    if kp[K_RETURN] and player2.curattack == None:
+    if kp[K_RETURN] and player2.curattack == None and player2.energy > punch.energy:
         #punch
         attacktimer2 = time()
         player2.curattack = punch
+        player2.energy -= punch.energy
     if player2.curattack != None:
         if time()-attacktimer2 > player2.curattack.cooldown:
             player2.curattack = None
@@ -245,9 +248,10 @@ while running:
     draw.rect(screen,(0,0,255),Rect(50,100,int(450*(player1.energy/player1.maxenergy)),50))
     draw.rect(screen,(0,0,255),Rect(700,100,int(450*(player2.energy/player2.maxenergy)),50))
 
-    if player1.energy < player1.maxenergy:
-        
+    if player1.energy < player1.maxenergy:       
         player1.energy += 1
+    if player2.energy < player2.maxenergy:
+        player2.energy += 1
 
     
     display.flip()
