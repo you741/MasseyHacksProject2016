@@ -15,9 +15,10 @@ GREEN = (0,255,0)
 back1 = image.load("images/background1.png")
 
 luffy1 = image.load('images/luffy1.png')
+zorro1 = image.load("images/z.png")
 
-
-luffyanims = [[image.load("images/ru1.png"),
+luffyanims = [image.load("images/jump.png"),
+              [image.load("images/ru1.png"),
                  image.load("images/ru2.png"),
                  image.load("images/ru3.png"),
                  image.load("images/ru4.png"),
@@ -26,21 +27,25 @@ luffyanims = [[image.load("images/ru1.png"),
                image.load("images/Luffypunch2.png"),
                image.load("images/Luffypunch3.png"),
                image.load("images/Luffypunch4.png")],
+                [image.load("images/luffykick1.png"),
+                 image.load("images/luffykick2.png"),
+                 image.load("images/luffykick3.png")],
               [image.load("images/rf1.png"),
                image.load("images/rf2.png"),
                image.load("images/rf3.png")]]
-
+#zorroanims = [[image.load("images/
 screen.blit(back1,(0,0))
 
 #====Characters====#
 ##anims, sprite, curattack, x,y,width, height, maxenergy, maxhp, jumpspeed, 
 luffy = Character(luffyanims,luffy1,None,0,0,242,198,100,100,0)
 
+
 #====Moves====#
 #damage, energy, time, cooldown, animsindex, dx,dy, width, height
-punch = Move( 5, 0, 0.5, 0.6, 1, 0, 10, 280, 30)
-kick = Move( 10, 0, 0.5, 0.6, 1, 0, 140, 280, 30)
-swing = Move(7, 0, 0.5, 1, 2, 0, 20, 280, 50)
+punch = Move( 5, 0, 0.5, 0.6, 2, 0, 10, 280, 30)
+kick = Move( 10, 0, 0.5, 0.9, 3, 0, 140, 280, 30)
+swing = Move(7, 0, 0.5, 1, 4, 0, 20, 280, 50)
 
 
 #====P1 VAR====#
@@ -162,9 +167,9 @@ while running:
     if kp[K_UP] and time() - jumptimer2 > 0.6:
         jumptimer2 = time()
     if time() - jumptimer2 <= 0.25:
-        player2.y -= 20
+        player2.y -= 50
     elif time() - jumptimer2 <= 0.5:
-        player2.y += 20
+        player2.y += 50
     else:
         player2.y = 500
     #DRAWING THE BACKGROUND AND CHARACTERS
@@ -180,9 +185,10 @@ while running:
         if punchrect1.move(player1.x+dir1*(width-punchrect1.width),player1.y+10).colliderect(Rect(player2.x,player2.y,player2.width,player2.height)) and time() - damagetimer2 > 0.6:
             hp2 -= player1.curattack.damage
             damagetimer2 = time()
-            
+    elif time() - jumptimer1 <= 0.5:
+        screen.blit(transform.flip(player1.anims[0],o1_1,o1_2),(player1.x,player1.y)) 
     elif moving:
-        screen.blit(transform.flip(player1.anims[0][int(time()%0.5/0.1)],o1_1,o1_2),(player1.x,player1.y))
+        screen.blit(transform.flip(player1.anims[1][int(time()%0.5/0.1)],o1_1,o1_2),(player1.x,player1.y))
     else:
         screen.blit(transform.flip(player1.sprite,o1_1,o1_2),(player1.x,player1.y))
 
@@ -200,8 +206,10 @@ while running:
             if punchrect2.move(x+dir2*(width-punchrect1.width),y+10).colliderect(player1.hitbox) and time() - damagetimer1 > 0.6:
                 hp1 -= player2.curattack.damage
                 damagetimer1 = time()
+    elif time() - jumptimer2 <= 0.5:
+        screen.blit(transform.flip(player2.anims[0],o2_1,o2_2),(player2.x,player2.y))
     elif moving2:
-        screen.blit(transform.flip(player2.anims[0][int(time()%0.5/0.1)],o2_1,o2_2),(player2.x,player2.y))
+        screen.blit(transform.flip(player2.anims[1][int(time()%0.5/0.1)],o2_1,o2_2),(player2.x,player2.y))
     else:
         screen.blit(transform.flip(player2.sprite,o2_1,o2_2),(player2.x,player2.y))
 
