@@ -6,7 +6,10 @@ from loading import *
 from time import *
 os.environ['SDL_VIDEO_WINDOW_POS'] = '70,25'
 screen = display.set_mode((1200,730))
+
+display.set_caption("Fight Fighters: The Fightening")
 loadingscreen(screen)
+
 #====COLOR====#
 BLACK  = (0,0,0)
 RED = (255,0,0)
@@ -74,11 +77,13 @@ player2.curattack = None
 player2.x,player2.y = 900,500
 player2.energy = player2.maxenergy
 jumptimer2 = 0
+
 damagetimer2 = 0
 #====ENEMIES====#
 
 
 
+>>>>>>> origin/master
 #====GAME PLAY FUNCTION====#
 #====ANIMATION FUNCTION====#
 ##def animate(imgs,drawx,drawy,player=1,filler=back1):
@@ -165,6 +170,24 @@ while running:
         player2.y += 50
     else:
         player2.y = 500
+       
+    #P1 SIDE
+    screen.set_clip(Rect(0,0,600,730))
+    screen.blit(back1,(x*-1+300,0)) #draws background for char 1
+    screen.blit(luffy1,(300-width//2,y)) #draws player 1
+    #P2 SIDE
+    screen.set_clip(Rect(600,0,600,730))
+    screen.blit(back1,(x2*-1+900,0)) #draws background for char 2
+    draw.circle(screen,BLACK,(900,y2),10)#draws player 2
+    screen.set_clip(None)
+    #health bars
+    draw.rect(screen,(0,255,0),hpbar1)
+    draw.rect(screen,(0,255,0),hpbar2)
+    screen.blit(luffy1,(600-width//2,y))
+=======
+=======
+        player2.y = 500
+>>>>>>> origin/master
     #DRAWING THE BACKGROUND AND CHARACTERS
     screen.blit(back1,(0,0))
     o1_1,o1_2 = (False,False) if not dir1 else (True,False) #orientation of direction facing for player 1
@@ -214,6 +237,7 @@ while running:
     #health bars
     draw.rect(screen,RED,Rect(50,50,450,50))
     draw.rect(screen,RED,Rect(700,50,450,50))
+
     draw.rect(screen,GREEN,Rect(50,50,int(450*(player1.hp/player1.maxhp)),50))
     draw.rect(screen,GREEN,Rect(700,50,int(450*(player2.hp/player2.maxhp)),50))
     #energy bars
@@ -221,6 +245,7 @@ while running:
     draw.rect(screen,(121,121,121),Rect(700,100,450,50))
     draw.rect(screen,(0,0,255),Rect(50,100,int(450*(player1.energy/player1.maxenergy)),50))
     draw.rect(screen,(0,0,255),Rect(700,100,int(450*(player2.energy/player2.maxenergy)),50))
+
 
     
     display.flip()
