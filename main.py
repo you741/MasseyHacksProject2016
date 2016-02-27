@@ -53,9 +53,9 @@ zorro = Character(zorroanims,zorro1,None,0,0,zorro1.get_width(),zorro1.get_width
 
 #====Moves====#
 #damage, energy, time, cooldown, animsindex, dx,dy, width, height
-punch = Move( 5, 0, 0.5, 0.6, 2, 0, 10, 280, 30)
-kick = Move( 10, 0, 0.5, 0.9, 3, 0, 140, 280, 30)
-swing = Move(7, 0, 0.5, 1, 4, 0, 20, 280, 50)
+punch = Move( 5, 10, 0.5, 0.6, 2, 0, 10, 280, 30)
+kick = Move( 10, 30, 0.5, 0.9, 3, 0, 140, 280, 30)
+swing = Move(7, 50, 0.5, 1, 4, 0, 20, 280, 50)
 
 
 #====P1 VAR====#
@@ -131,10 +131,12 @@ while running:
         jumptimer1 = time()
         
     #MOVES OF P1 setting to attack
-    if kp[K_e] and player1.curattack == None:
+    if kp[K_e] and player1.curattack == None and player1.energy > punch.energy:
         #punch
         attacktimer1 = time()
         player1.curattack = punch
+        player1.energy -= punch.energy
+        
     if kp[K_q] and player1.curattack == None:
         #kick
         attacktimer1 = time()
@@ -242,6 +244,7 @@ while running:
     draw.rect(screen,(0,0,255),Rect(50,100,int(450*(player1.energy/player1.maxenergy)),50))
     draw.rect(screen,(0,0,255),Rect(700,100,int(450*(player2.energy/player2.maxenergy)),50))
 
+    player1.energy += 1
 
     
     display.flip()
