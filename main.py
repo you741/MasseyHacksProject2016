@@ -13,6 +13,9 @@ x,y = 600,500
 width,height = luffy1.get_width(),luffy1.get_height()
 screen.blit(back1,(0,0))
 screen.set_clip(Rect(0,0,1200,730))
+#====ENEMIES====#
+
+#====GAME PLAY FUNCTION====#
 running = True
 while running:
     for e in event.get():
@@ -23,7 +26,7 @@ while running:
         x += 10
     if kp[K_LEFT] and x > 600:
         x -= 10
-    screen.blit(back1,(x*-1+600,0))
-    screen.blit(luffy1,(600-width//2,y))
+    screen.blit(back1,(x*-1+600,0)) #draws background
+    screen.blit(luffy1,(600-width//2,y)) #draws main character
     display.flip()
 quit()
