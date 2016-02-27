@@ -33,8 +33,8 @@ luffyanims = [[image.load("images/ru1.png"),
 screen.blit(back1,(0,0))
 
 #====Characters====#
-##anims, sprite, curattack, width, height, maxenergy, maxhp, jumpspeed, 
-luffy = Character(luffyanims,luffy1,None,100,175,100,100,0)
+##anims, sprite, curattack, x,y,width, height, maxenergy, maxhp, jumpspeed, 
+luffy = Character(luffyanims,luffy1,None,0,0,242,198,100,100,0)
 
 #====Moves====#
 #damage, energy, time, cooldown, animsindex, dx,dy, width, height
@@ -45,9 +45,9 @@ swing = Move(7, 0, 0.5, 1, 2, 0, 20, 280, 50)
 
 #====P1 VAR====#
 player1 = luffy
-
 x,y = 300,500
 width,height = player1.width, player1.height
+player1.x, player1.y = 300,500
 moving = True
 #punchrect1 = Rect(0,0,280,30)
 dir1 = 0 #direction 0 = right; 1 is left
@@ -57,6 +57,19 @@ jumptimer1 = 0
 attacktimer1 = 0
 player1.curattack = None
 #====P2 VAR====#
+player2 = luffy
+x2,y2 = 900,500
+width2,height2 = player2.width, player2.height
+player2.x, player2.y = 900,500
+moving = True
+#punchrect1 = Rect(0,0,280,30)
+dir2 = 0 #direction 0 = right; 1 is left
+hp2,maxhp2 = 100,100
+energy,maxenergy = 100,100
+jumptimer2 = 0
+attacktimer2 = 0
+player2.curattack = None
+
 x2,y2 = 900,500
 width2,height2 = 100,240
 hp2,maxhp2 = 100,100
@@ -152,7 +165,6 @@ while running:
         y2 = 500
     #DRAWING THE BACKGROUND AND CHARACTERS
     screen.blit(back1,(0,0))
-    #draws player 1
     o1_1,o1_2 = (False,False) if not dir1 else (True,False) #orientation of direction facing for player 1
 
     if player1.curattack != None:
@@ -162,14 +174,35 @@ while running:
             #following if statement checks if enemy collides with player1.'s current attack rect
             punchrect1 = player1.curattack.hitbox
 #            draw.rect(screen,BLACK,punchrect1.move(x+dir1*(width-punchrect1.width),y+10),1)
-            if punchrect1.move(x+dir1*(width-punchrect1.width),y+10).colliderect(Rect(x2,y2,width2,height2)) and time() - damagetimer2 > 0.6:
+            if punchrect1.move(x+dir1*(width-punchrect1.width),y+10).colliderect(player2.hitbox) and time() - damagetimer2 > 0.6:
                 hp2 -= player1.curattack.damage
                 damagetimer2 = time()
     elif moving:
         screen.blit(transform.flip(player1.anims[0][int(time()%0.5/0.1)],o1_1,o1_2),(x,y))
     else:
         screen.blit(transform.flip(player1.sprite,o1_1,o1_2),(x,y))
-    draw.rect(screen,BLACK,(x2,y2,width2,height2))#draws player 2
+
+        
+    #draws player 2
+    o2_1,o2_2 = (False,False) if not dir2 else (True,False) #orientation of direction facing for player 2
+
+    if player2.curattack != None:
+        if time() - attacktimer2 < player2.curattack.time:
+            #attack animation and damage handling
+            screen.blit(transform.flip(player2.anims[player2.curattack.animsindex][int((time()-attacktimer2)/(player2.curattack.time/len(player2.anims[player2.curattack.animsindex])+0.01))],o2_1,o2_2),(x,y))
+            #following if statement checks if enemy collides with player1.'s current attack rect
+            punchrect2 = player2.curattack.hitbox
+#            draw.rect(screen,BLACK,punchrect1.move(x+dir1*(width-punchrect1.width),y+10),1)
+            if punchrect2.move(x+dir2*(width-punchrect1.width),y+10).colliderect(player1.hitbox) and time() - damagetimer1 > 0.6:
+                hp1 -= player2.curattack.damage
+                damagetimer1 = time()
+    elif moving:
+        screen.blit(transform.flip(player2.anims[0][int(time()%0.5/0.1)],o1_1,o1_2),(x,y))
+    else:
+        screen.blit(transform.flip(player2.sprite,o1_1,o1_2),(x,y))
+
+
+        
     #limits hp
     hp2 = max(0,hp2)
     hp1 = max(0,hp1)
@@ -181,7 +214,6 @@ while running:
     #energy bars
     draw.rect(screen,RED,Rect(50,100,450,50))
     draw.rect(screen,RED,Rect(700,100,450,50))
-    #draw.rect(screen,
     
     display.flip()
 font.quit() #deletes font
