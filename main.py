@@ -155,16 +155,15 @@ while running:
     #draws player 1
     o1_1,o1_2 = (False,False) if not dir1 else (True,False) #orientation of direction facing for player 1
 
-    if player1.curattack != None:
-        if time() - attacktimer1 < player1.curattack.time:
-            #attack animation and damage handling
-            screen.blit(transform.flip(player1.anims[player1.curattack.animsindex][int((time()-attacktimer1)/(player1.curattack.time/len(player1.anims[player1.curattack.animsindex])+0.01))],o1_1,o1_2),(x,y))
-            #following if statement checks if enemy collides with player1.'s current attack rect
-            punchrect1 = player1.curattack.hitbox
+    if player1.curattack != None and time() - attacktimer1 < player1.curattack.time:
+        #attack animation and damage handling
+        screen.blit(transform.flip(player1.anims[player1.curattack.animsindex][int((time()-attacktimer1)/(player1.curattack.time/len(player1.anims[player1.curattack.animsindex])+0.01))],o1_1,o1_2),(x,y))
+        #following if statement checks if enemy collides with player1.'s current attack rect
+        punchrect1 = player1.curattack.hitbox
 #            draw.rect(screen,BLACK,punchrect1.move(x+dir1*(width-punchrect1.width),y+10),1)
-            if punchrect1.move(x+dir1*(width-punchrect1.width),y+10).colliderect(Rect(x2,y2,width2,height2)) and time() - damagetimer2 > 0.6:
-                hp2 -= player1.curattack.damage
-                damagetimer2 = time()
+        if punchrect1.move(x+dir1*(width-punchrect1.width),y+10).colliderect(Rect(x2,y2,width2,height2)) and time() - damagetimer2 > 0.6:
+            hp2 -= player1.curattack.damage
+            damagetimer2 = time()
     elif moving:
         screen.blit(transform.flip(player1.anims[0][int(time()%0.5/0.1)],o1_1,o1_2),(x,y))
     else:
