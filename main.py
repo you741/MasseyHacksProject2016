@@ -54,9 +54,9 @@ zorro = Character(zorroanims,zorro1,None,0,0,zorro1.get_width(),zorro1.get_width
 #====Moves====#
 #damage, energy, time, cooldown, animsindex, dx,dy, width, height
 punch = Move( 5, 0, 0.5, 0.6, 2, 0, 10, 280, 30)
-kick = Move( 10, 0, 0.5, 0.9, 3, 0, 120, 280, 30)
+kick = Move( 10, 0, 0.5, 0.9, 3, 0, 100, 280, 30)
 swing = Move(7, 0, 0.5, 1, 4, 0, 20, 280, 50)
-sword = Move(8,0,0.6,0.7,1,0,30,100,50)
+sword = Move(8,0,0.6,0.7,2,0,30,250,50)
 
 #====P1 VAR====#
 player1 = luffy.get_instance()
