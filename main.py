@@ -153,9 +153,11 @@ while running:
     if kp[K_RIGHT] and x2+width2 < 1200:
         nx2 += 10
         moving2 = True
+        dir2 = 0
     if kp[K_LEFT] and x2 > 0:
         nx2 -= 10
         moving2 = True
+        dir2 = 1
     #makes sure we do not collide with enemy
     if not Rect(nx2,y2,width2,height2).colliderect(Rect(x,y,width,height)):
         player2.x = nx2
@@ -201,9 +203,9 @@ while running:
                 hp1 -= player2.curattack.damage
                 damagetimer1 = time()
     elif moving2:
-        screen.blit(transform.flip(player2.anims[0][int(time()%0.5/0.1)],o1_1,o1_2),(player2.x,player2.y))
+        screen.blit(transform.flip(player2.anims[0][int(time()%0.5/0.1)],o2_1,o2_2),(player2.x,player2.y))
     else:
-        screen.blit(transform.flip(player2.sprite,o1_1,o1_2),(player2.x,player2.y))
+        screen.blit(transform.flip(player2.sprite,o2_1,o2_2),(player2.x,player2.y))
 
 
         
