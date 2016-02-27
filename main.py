@@ -50,34 +50,29 @@ swing = Move(7, 0, 0.5, 1, 4, 0, 20, 280, 50)
 
 #====P1 VAR====#
 player1 = luffy.get_instance()
-width,height = player1.width, player1.height
 player1.x, player1.y = 300,500
 moving = True
 #punchrect1 = Rect(0,0,280,30)
 dir1 = 0 #direction 0 = right; 1 is left
-hp1,maxhp1 = 100,100
-energy,maxenergy = 100,100
+player1.hp  = player1.maxhp
+player1.energy = player1.maxenergy
 jumptimer1 = 0
 attacktimer1 = 0
 player1.curattack = None
 #====P2 VAR====#
 player2 = luffy.get_instance()
-width2,height2 = player2.width, player2.height
 player2.x, player2.y = 900,500
 moving2 = True
-moving = True
 #punchrect1 = Rect(0,0,280,30)
 dir2 = 0 #direction 0 = right; 1 is left
-hp2,maxhp2 = 100,100
-energy,maxenergy = 100,100
+player2.hp = player2.maxhp
+player2.energy = player2.maxenergy
 jumptimer2 = 0
 attacktimer2 = 0
 player2.curattack = None
 
-x2,y2 = 900,500
-width2,height2 = 100,240
-hp2,maxhp2 = 100,100
-energy,maxenergy = 100,100
+player2.x,player2.y = 900,500
+player2.energy = player2.maxenergy
 jumptimer2 = 0
 damagetimer2 = 0
 #====ENEMIES====#
@@ -99,8 +94,6 @@ damagetimer2 = 0
 ##        sleep(0.1)
 font.init() #Starts font
 tymeFont = font.SysFont("Arial", 30)
-hpbar1 = Rect(50,50,450,50)
-hpbar2 = Rect(700,50,450,50)
 running = True
 while running:
     for e in event.get():
@@ -110,7 +103,7 @@ while running:
     #P1 CONTROLS
     nx = player1.x #new x
     moving = False
-    if kp[K_d] and player1.x+width < 1200:
+    if kp[K_d] and player1.x+player1.width < 1200:
         #right move
         moving = True
         nx += 10
@@ -153,7 +146,7 @@ while running:
     #P2 CONTROLS
     nx2 = player2.x
     moving2 = False
-    if kp[K_RIGHT] and player2.x+width2 < 1200:
+    if kp[K_RIGHT] and player2.x+player2.width < 1200:
         nx2 += 10
         moving2 = True
         dir2 = 0
@@ -182,8 +175,8 @@ while running:
         #following if statement checks if enemy collides with player1.'s current attack rect
         punchrect1 = player1.curattack.hitbox
         #draw.rect(screen,BLACK,punchrect1.move(player1.x+dir1*(width-punchrect1.width),player1.y+10),1)
-        if punchrect1.move(player1.x+dir1*(width-punchrect1.width),player1.y+10).colliderect(Rect(player2.x,player2.y,player2.width,player2.height)) and time() - damagetimer2 > 0.6:
-            hp2 -= player1.curattack.damage
+        if punchrect1.move(player1.x+dir1*(player1.width-punchrect1.width),player1.y+10).colliderect(Rect(player2.x,player2.y,player2.width,player2.height)) and time() - damagetimer2 > 0.6:
+            player2.hp -= player1.curattack.damage
             damagetimer2 = time()
     elif time() - jumptimer1 <= 0.5:
         screen.blit(transform.flip(player1.anims[0],o1_1,o1_2),(player1.x,player1.y)) 
@@ -203,8 +196,8 @@ while running:
             #following if statement checks if enemy collides with player1.'s current attack rect
             punchrect2 = player2.curattack.hitbox
 #            draw.rect(screen,BLACK,punchrect1.move(x+dir1*(width-punchrect1.width),y+10),1)
-            if punchrect2.move(x+dir2*(width-punchrect1.width),y+10).colliderect(player1.hitbox) and time() - damagetimer1 > 0.6:
-                hp1 -= player2.curattack.damage
+            if punchrect2.move(x+dir2*(player2.width-punchrect1.width),y+10).colliderect(player1.hitbox) and time() - damagetimer1 > 0.6:
+                player1.hp -= player2.curattack.damage
                 damagetimer1 = time()
     elif time() - jumptimer2 <= 0.5:
         screen.blit(transform.flip(player2.anims[0],o2_1,o2_2),(player2.x,player2.y))
@@ -216,16 +209,19 @@ while running:
 
         
     #limits hp
-    hp2 = max(0,hp2)
-    hp1 = max(0,hp1)
+    player2.hp = max(0,player2.hp)
+    player1.hp = max(0,player1.hp)
     #health bars
     draw.rect(screen,RED,Rect(50,50,450,50))
     draw.rect(screen,RED,Rect(700,50,450,50))
-    draw.rect(screen,GREEN,Rect(50,50,int(450*(hp1/maxhp1)),50))
-    draw.rect(screen,GREEN,Rect(700,50,int(450*(hp2/maxhp2)),50))
+    draw.rect(screen,GREEN,Rect(50,50,int(450*(player1.hp/player1.maxhp)),50))
+    draw.rect(screen,GREEN,Rect(700,50,int(450*(player2.hp/player2.maxhp)),50))
     #energy bars
-    draw.rect(screen,RED,Rect(50,100,450,50))
-    draw.rect(screen,RED,Rect(700,100,450,50))
+    draw.rect(screen,(121,121,121),Rect(50,100,450,50))
+    draw.rect(screen,(121,121,121),Rect(700,100,450,50))
+    draw.rect(screen,(0,0,255),Rect(50,100,int(450*(player1.energy/player1.maxenergy)),50))
+    draw.rect(screen,(0,0,255),Rect(700,100,int(450*(player2.energy/player2.maxenergy)),50))
+
     
     display.flip()
 font.quit() #deletes font
