@@ -27,9 +27,9 @@ luffyanims = [[image.load("images/ru1.png"),
 screen.blit(back1,(0,0))
 
 #====Moves====#
-punch = Move( 5, 0, 0.5, 0.6, 0)
-kick = Move( 10, 0, 0.5, 2, 0)
-swing = Move(7, 0, 0.5, 1, 0)
+punch = Move( 5, 0, 0.5, 0.6, 1)
+kick = Move( 10, 0, 0.5, 2, 1)
+swing = Move(7, 0, 0.5, 1, 1)
 
 
 #====P1 VAR====#
