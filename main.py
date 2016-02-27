@@ -49,15 +49,13 @@ screen.blit(back1,(0,0))
 #====Characters====#
 ##anims, sprite, curattack, x,y,width, height, maxenergy, maxhp, jumpspeed, 
 luffy = Character(luffyanims,luffy1,None,0,0,luffy1.get_width(),luffy1.get_height(),100,100,0)
-zorro = Character(zorroanims,zorro1,None,0,0,zorro1.get_width(),zorro1.get_width(),100,100,0)
+zorro = Character(zorroanims,zorro1,None,0,0,zorro1.get_width(),zorro1.get_width(),100,200,0)
 
 #====Moves====#
 #damage, energy, time, cooldown, animsindex, dx,dy, width, height
-
 punch = Move( 5, 10, 0.5, 0.6, 2, 0, 10, 280, 30)
-kick = Move( 10, 30, 0.5, 0.9, 3, 0, 140, 280, 30)
-swing = Move(7, 50, 0.5, 1, 4, 0, 20, 280, 50)
-
+kick = Move( 10, 30, 0.5, 0.6, 3, 0, 140, 280, 30)
+swing = Move(7, 50, 0.5, 0.6, 4, 0, 20, 280, 50)
 
 
 #====P1 VAR====#
@@ -139,10 +137,11 @@ while running:
         player1.curattack = punch
         player1.energy -= punch.energy
         
-    if kp[K_q] and player1.curattack == None:
+    if kp[K_q] and player1.curattack == None and player1.energy > kick.energy:
         #kick
         attacktimer1 = time()
         player1.curattack = kick
+        player1.energy -= kick.energy
     if kp[K_r] and player1.curattack == None:
         #swing
         attacktimer1 = time()
@@ -171,7 +170,7 @@ while running:
     if kp[K_RETURN] and player2.curattack == None:
         #punch
         attacktimer2 = time()
-        player2.curattack = sword
+        player2.curattack = punch
     if player2.curattack != None:
         if time()-attacktimer2 > player2.curattack.cooldown:
             player2.curattack = None
@@ -246,7 +245,9 @@ while running:
     draw.rect(screen,(0,0,255),Rect(50,100,int(450*(player1.energy/player1.maxenergy)),50))
     draw.rect(screen,(0,0,255),Rect(700,100,int(450*(player2.energy/player2.maxenergy)),50))
 
-    player1.energy += 1
+    if player1.energy < player1.maxenergy:
+        
+        player1.energy += 1
 
     
     display.flip()
