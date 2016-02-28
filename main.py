@@ -61,8 +61,8 @@ punch = Move( 5, 10, 0.5, 0.6, 2, 0, 10, 280, 30)
 kick = Move( 10, 30, 0.5, 0.9, 3, 0, 120, 280, 30)
 swing = Move(15, 50, 0.5, 1, 4, 0, 20, 280, 50)
 
-slash = Move(8,40,0.7,0.8,2,0,20,230,70)
-uppercut = Move(25,50,0.7,0.8,3,0,-100,200,150)
+slash = Move(8,30,0.7,0.8,2,0,20,230,70)
+uppercut = Move(12,40,0.6,0.8,3,0,-100,200,150)
 
 
 #====P1 VAR====#
@@ -160,9 +160,9 @@ while running:
             player1.curattack = None
     #actual jump movement
     if time() - jumptimer1 <= 0.25:
-        player1.y -= 40
+        player1.y -= 60
     elif time() - jumptimer1 <= 0.5:
-        player1.y += 40
+        player1.y += 60
     else:
         player1.y = 500
     #P2 CONTROLS
