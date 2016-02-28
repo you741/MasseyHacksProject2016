@@ -4,6 +4,7 @@ from time import *
 
 os.environ['SDL_VIDEO_WINDOW_POS'] = '70,25'
 display.set_caption("Fight Fighters: The Fightening") #Working title
+
 victory = True
 def victory (screen,person):
     start = False
@@ -11,8 +12,8 @@ def victory (screen,person):
     font.init()
     victoryFont = font.SysFont("Arial", 150)
     retryFont = font.SysFont("Arial", 50)
-    quote = ["LUFFY WINS!",
-            "ZORRO WINS!",
+    quote = ["PLAYER 1 WINS!",
+            "PLAYER 2 WINS!",
             "Press Enter to play again!"]
     victoryPic = victoryFont.render((quote[person]), True, (255,255,255))
     retryPic = retryFont.render((quote[2]), True, (255,255,255))

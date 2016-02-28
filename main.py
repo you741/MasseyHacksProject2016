@@ -57,8 +57,7 @@ zorro = Character(zorroanims,zorro1,None,0,0,zorro1.get_width(),zorro1.get_width
 punch = Move( 50, 10, 0.5, 0.6, 2, 0, 10, 280, 30)
 kick = Move( 10, 30, 0.5, 0.9, 3, 0, 120, 280, 30)
 swing = Move(15, 50, 0.5, 1, 4, 0, 20, 280, 50)
-
-slash = Move(8,50,0.7,0.8,2,0,20,230,70)
+slash = Move(8,30,0.7,0.8,2,0,20,230,70)
 uppercut = Move(10,50,0.7,0.8,3,0,-100,200,150)
 
 
@@ -263,33 +262,19 @@ while running:
         player2.energy += 0.3
 
     if player2.hp <= 0:
-        victory(screen,1)
+        victory(screen,0)
         reset = True
         
     elif player1.hp <= 0:
-        victory(screen,0)
+        victory(screen,1)
         reset = True
 
     if reset:
-        player1 = luffy.get_instance()
-        player1.x, player1.y = 300,500
-        moving = True
-        #punchrect1 = Rect(0,0,280,30)
-        dir1 = 0 #direction 0 = right; 1 is left
-        player1.hp  = player1.maxhp
-        player1.energy = player1.maxenergy
-        jumptimer1 = 0
-        attacktimer1 = 0
-        player1.curattack = None
-        #====P2 VAR====#
-        player2 = zorro.get_instance()
-        width2,height2 = player2.width, player2.height
-        player2.x, player2.y = 900,500
-        moving2 = True
-        #punchrect1 = Rect(0,0,280,30)
-        dir2 = 0 #direction 0 = right; 1 is left
+        player1.hp = player1.maxhp
         player2.hp = player2.maxhp
+        player1.energy = player1.maxenergy
         player2.energy = player2.maxenergy
+
         jumptimer2 = 0
         attacktimer2 = 0
         player2.curattack = None
@@ -299,7 +284,7 @@ while running:
         damagetimer1 = 0
         damagetimer2 = 0
         reset = False
-       
+
     display.flip()
 font.quit() #deletes font
 quit()
