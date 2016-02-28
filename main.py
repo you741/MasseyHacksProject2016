@@ -3,6 +3,7 @@ from pygame import *
 from moves import *
 from characters import *
 from loading import *
+from victory import *
 from time import *
 os.environ['SDL_VIDEO_WINDOW_POS'] = '70,25'
 screen = display.set_mode((1200,730))
@@ -56,7 +57,7 @@ zorro = Character(zorroanims,zorro1,None,0,0,zorro1.get_width(),zorro1.get_width
 punch = Move( 5, 10, 0.5, 0.6, 2, 0, 10, 280, 30)
 kick = Move( 10, 30, 0.5, 0.9, 3, 0, 120, 280, 30)
 swing = Move(15, 50, 0.5, 1, 4, 0, 20, 280, 50)
-slash = Move(8,50,0.7,0.8,2,0,20,230,70)
+slash = Move(8,30,0.7,0.8,2,0,20,230,70)
 uppercut = Move(10,50,0.7,0.8,3,0,-100,200,150)
 
 #====P1 VAR====#
@@ -110,6 +111,12 @@ while running:
     for e in event.get():
         if e.type == QUIT:
             running = False
+    if 0 in [player1.hp,player2.hp]:
+        #victory
+        if player1.hp == 0:
+            victory(1)
+        else:
+            victory(0)
     kp = key.get_pressed()
     #P1 CONTROLS
     nx = player1.x #new x
@@ -259,10 +266,6 @@ while running:
     if player2.energy < player2.maxenergy:
         player2.energy += 0.3
 
-    if player2.hp <= 0:
-        victoryscreen("Player 2")
-    elif player1.hp <= 0:
-        victoryscreen("Player 1")
     
     display.flip()
 font.quit() #deletes font
