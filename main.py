@@ -262,11 +262,11 @@ while running:
         player2.energy += 0.3
 
     if player2.hp <= 0:
-        victory(screen,1)
+        victory(screen,0)
         reset = True
         
     elif player1.hp <= 0:
-        victory(screen,0)
+        victory(screen,1)
         reset = True
 
     if reset:
