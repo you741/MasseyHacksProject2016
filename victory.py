@@ -3,9 +3,9 @@ from pygame import *
 from time import *
 
 os.environ['SDL_VIDEO_WINDOW_POS'] = '70,25'
-screen = display.set_mode((1200,730))
 display.set_caption("Fight Fighters: The Fightening") #Working title
-def victory(winner):
+
+def victory(screen,winner):
     victory = True
     screen.fill((0,0,0))
     font.init()
@@ -23,5 +23,7 @@ def victory(winner):
         for e in event.get():
             if e.type == QUIT:
                 running = False
+        kp = key.get_pressed()
+        if kp[K_RETURN]:
+            break
         display.flip()
-    quit()
