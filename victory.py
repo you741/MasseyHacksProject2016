@@ -6,6 +6,7 @@ os.environ['SDL_VIDEO_WINDOW_POS'] = '70,25'
 display.set_caption("Fight Fighters: The Fightening") #Working title
 victory = True
 def victory (screen,person):
+    start = True
     screen.fill((0,0,0))
     font.init()
     victoryFont = font.SysFont("Arial", 150)
@@ -23,6 +24,10 @@ def victory (screen,person):
             if e.type == QUIT:
                 running = False
         kp = key.get_pressed()
+        
+        if not kp[K_RETURN]: 
+            start = True
         if kp[K_RETURN]:
             break
         display.flip()
+    return

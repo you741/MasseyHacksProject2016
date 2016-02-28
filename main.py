@@ -271,12 +271,33 @@ while running:
         reset = True
 
     if reset:
-        player1.hp = player1.maxhp
-        player2.hp = player2.maxhp
+        player1 = luffy.get_instance()
+        player1.x, player1.y = 300,500
+        moving = True
+        #punchrect1 = Rect(0,0,280,30)
+        dir1 = 0 #direction 0 = right; 1 is left
+        player1.hp  = player1.maxhp
         player1.energy = player1.maxenergy
+        jumptimer1 = 0
+        attacktimer1 = 0
+        player1.curattack = None
+        #====P2 VAR====#
+        player2 = zorro.get_instance()
+        width2,height2 = player2.width, player2.height
+        player2.x, player2.y = 900,500
+        moving2 = True
+        #punchrect1 = Rect(0,0,280,30)
+        dir2 = 0 #direction 0 = right; 1 is left
+        player2.hp = player2.maxhp
         player2.energy = player2.maxenergy
-        player1.x,player1.y = 300,500
-        player2.x,player2.y = 700,500
+        jumptimer2 = 0
+        attacktimer2 = 0
+        player2.curattack = None
+        player2.x,player2.y = 900,500
+        player2.energy = player2.maxenergy
+        jumptimer2 = 0
+        damagetimer1 = 0
+        damagetimer2 = 0
         
        
     display.flip()
