@@ -26,10 +26,7 @@ luffyanims = [image.load("images/jump.png"),
                  image.load("images/ru3.png"),
                  image.load("images/ru4.png"),
                  image.load("images/ru5.png")],
-               [image.load("images/Luffypunch1.png"),
-               image.load("images/Luffypunch2.png"),
-               image.load("images/Luffypunch3.png"),
-               image.load("images/Luffypunch4.png")],
+               [image.load("images/luffypunch.png")],
                 [image.load("images/luffykick1.png"),
                  image.load("images/luffykick2.png"),
                  image.load("images/luffykick3.png")],
@@ -43,21 +40,24 @@ zorroanims = [transform.flip(image.load("images/zjump.png"),True,False),
                transform.flip(image.load("images/zrun4.png"),True,False)],
               [image.load("images/zr1.png"),
                image.load("images/zr2.png"),
-               image.load("images/zr3.png")]]
+               image.load("images/zr3.png")],
+              [image.load("images/zru1.png"),
+               image.load("images/zru2.png"),
+               image.load("images/zru3.png")]]
 screen.blit(back1,(0,0))
 
 #====Characters====#
 ##anims, sprite, curattack, x,y,width, height, maxenergy, maxhp, jumpspeed, 
 luffy = Character(luffyanims,luffy1,None,0,0,luffy1.get_width(),luffy1.get_height(),100,100,0)
-zorro = Character(zorroanims,zorro1,None,0,0,zorro1.get_width(),zorro1.get_width(),80,150,0)
+zorro = Character(zorroanims,zorro1,None,0,0,zorro1.get_width(),zorro1.get_width(),120,150,0)
 
 #====Moves====#
 #damage, energy, time, cooldown, animsindex, dx,dy, width, height
 punch = Move( 5, 10, 0.5, 0.6, 2, 0, 10, 280, 30)
 kick = Move( 10, 30, 0.5, 0.9, 3, 0, 120, 280, 30)
 swing = Move(15, 50, 0.5, 1, 4, 0, 20, 280, 50)
-slash = Move(8,60,0.7,0.8,2,0,20,230,70)
-
+slash = Move(8,50,0.7,0.8,2,0,20,230,70)
+uppercut = Move(10,50,0.7,0.8,3,0,-100,200,150)
 
 #====P1 VAR====#
 player1 = luffy.get_instance()
@@ -117,12 +117,12 @@ while running:
     if kp[K_d] and player1.x+player1.width < 1200:
         #right move
         moving = True
-        nx += 10
+        nx += 20
         dir1 = 0
     if kp[K_a] and player1.x > 0:
         #left move
         moving = True
-        nx -= 10
+        nx -= 20
         dir1 = 1
     #makes sure we do not collide with enemy
     if not Rect(nx,player1.y,player1.width,player1.height).colliderect(Rect(player2.x,player2.y,player2.width,player2.height)):
@@ -163,18 +163,23 @@ while running:
     nx2 = player2.x
     moving2 = False
     if kp[K_RIGHT] and player2.x+player2.width < 1200:
-        nx2 += 10
+        nx2 += 20
         moving2 = True
         dir2 = 0
     if kp[K_LEFT] and player2.x > 0:
-        nx2 -= 10
+        nx2 -= 20
         moving2 = True
         dir2 = 1
-    if kp[K_RETURN] and player2.curattack == None and player2.energy > punch.energy:
-        #punch
+    if kp[K_RETURN] and player2.curattack == None and player2.energy > slash.energy:
+        #slash
         attacktimer2 = time()
-        player2.curattack = punch
-        player2.energy -= punch.energy
+        player2.curattack = slash
+        player2.energy -= slash.energy
+    if kp[K_BACKSLASH] and player2.curattack == None and player2.energy > uppercut.energy:
+        #uppercut
+        attacktimer2 = time()
+        player2.curattack = uppercut
+        player2.energy -= uppercut.energy
     if player2.curattack != None:
         if time()-attacktimer2 > player2.curattack.cooldown:
             player2.curattack = None
@@ -195,6 +200,7 @@ while running:
     o1_1,o1_2 = (False,False) if not dir1 else (True,False) #orientation of direction facing for player 1
 
     if player1.curattack != None and time() - attacktimer1 < player1.curattack.time:
+
         #attack animation and damage handling
         screen.blit(transform.flip(player1.anims[player1.curattack.animsindex][int((time()-attacktimer1)/(player1.curattack.time/len(player1.anims[player1.curattack.animsindex])+0.01))],o1_1,o1_2),(player1.x,player1.y))
         #following if statement checks if enemy collides with player1.'s current attack rect
