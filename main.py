@@ -11,6 +11,9 @@ screen = display.set_mode((1200,730))
 display.set_caption("Fight Fighters: The Fightening")
 loadingscreen(screen)
 reset = False
+#====MUSIC====#
+mixer.init()
+mixer.Sound("sound/mus_undyneboss.ogg").play(-1)
 #====COLOR====#
 BLACK  = (0,0,0)
 RED = (255,0,0)
