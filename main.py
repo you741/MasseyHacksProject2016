@@ -298,7 +298,7 @@ while running:
         jumptimer2 = 0
         damagetimer1 = 0
         damagetimer2 = 0
-        
+        reset = False
        
     display.flip()
 font.quit() #deletes font
