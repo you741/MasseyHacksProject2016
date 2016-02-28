@@ -9,7 +9,7 @@ def loadingscreen(screen):
     screen.fill((0,0,0))
     loading = True
     font.init()
-    titleFont = font.SysFont("Arial", 150)
+    titleFont = font.SysFont("Arial", 120)
     subtitleFont = font.SysFont("Arial", 100)
     startFont = font.SysFont("Arial",40)
     quote = ["FIGHT FIGHTERS",
