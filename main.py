@@ -3,13 +3,14 @@ from pygame import *
 from moves import *
 from characters import *
 from loading import *
+from victory import *
 from time import *
 os.environ['SDL_VIDEO_WINDOW_POS'] = '70,25'
 screen = display.set_mode((1200,730))
 
 display.set_caption("Fight Fighters: The Fightening")
 loadingscreen(screen)
-
+reset = False
 #====COLOR====#
 BLACK  = (0,0,0)
 RED = (255,0,0)
@@ -53,10 +54,10 @@ zorro = Character(zorroanims,zorro1,None,0,0,zorro1.get_width(),zorro1.get_width
 
 #====Moves====#
 #damage, energy, time, cooldown, animsindex, dx,dy, width, height
-punch = Move( 5, 10, 0.5, 0.6, 2, 0, 10, 280, 30)
+punch = Move( 50, 10, 0.5, 0.6, 2, 0, 10, 280, 30)
 kick = Move( 10, 30, 0.5, 0.9, 3, 0, 120, 280, 30)
 swing = Move(15, 50, 0.5, 1, 4, 0, 20, 280, 50)
-slash = Move(8,60,0.7,0.8,2,0,20,230,70)
+slash = Move(100,60,0.7,0.8,2,0,20,230,70)
 
 
 #====P1 VAR====#
@@ -254,10 +255,22 @@ while running:
         player2.energy += 0.3
 
     if player2.hp <= 0:
-        victoryscreen("Player 2")
+        victory(screen,1)
+        reset = True
+        
     elif player1.hp <= 0:
-        victoryscreen("Player 1")
-    
+        victory(screen,0)
+        reset = True
+
+    if reset:
+        player1.hp = player1.maxhp
+        player2.hp = player2.maxhp
+        player1.energy = player1.maxenergy
+        player2.energy = player2.maxenergy
+        player1.x,player1.y = 300,500
+        player2.x,player2.y = 700,500
+        
+       
     display.flip()
 font.quit() #deletes font
 quit()
