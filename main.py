@@ -253,6 +253,10 @@ while running:
     if player2.energy < player2.maxenergy:
         player2.energy += 0.3
 
+    if player2.hp <= 0:
+        victoryscreen("Player 2")
+    elif player1.hp <= 0:
+        victoryscreen("Player 1")
     
     display.flip()
 font.quit() #deletes font
